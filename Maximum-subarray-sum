@@ -1,0 +1,30 @@
+//DAY 5/100
+/* Find the contiguous subarray within an array (containing at least one number) which has the largest sum.
+
+For example:
+
+Given the array [-2,1,-3,4,-1,2,1,-5,4],
+
+the contiguous subarray [4,-1,2,1] has the largest sum = 6.
+
+For this problem, return the maximum sum.
+*/
+
+// LOGIC: choose between the larger of sum of (A[1] wiht A[0]) or A[1].
+//then use a maxsum that will store the maximum of the calculated sums of the subarray, as it is possible that next subarray has a lesser sum yet maxsum resolves the conflict
+
+
+
+
+
+int Solution::maxSubArray(const vector<int> &A) {
+    int n = A.size(), i , sum = A[0], max_sum = A[0];
+    for(i = 1; i < n; i++) {
+        sum=max(sum+A[i], A[i]);              //choose A[1]+A[0] or A[1]
+        if(max_sum < sum) {
+            max_sum = sum;                    //resolves var sum conflict of holding the current sum only
+        }
+    }
+    
+    return max_sum;
+}
