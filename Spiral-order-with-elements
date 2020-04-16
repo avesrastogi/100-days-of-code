@@ -1,0 +1,77 @@
+//DAY 12/100
+/*
+Given an integer A, generate a square matrix filled with elements from 1 to A2 in spiral order.
+
+
+
+Input Format:
+
+The first and the only argument contains an integer, A.
+Output Format:
+
+Return a 2-d matrix of size A x A satisfying the spiral order.
+Constraints:
+
+1 <= A <= 1000
+Examples:
+
+Input 1:
+    A = 3
+
+Output 1:
+    [   [ 1, 2, 3 ],
+        [ 8, 9, 4 ],
+        [ 7, 6, 5 ]   ]
+
+Input 2:
+    4
+
+Output 2:
+    [   [1, 2, 3, 4],
+        [12, 13, 14, 5],
+        [11, 16, 15, 6],
+        [10, 9, 8, 7]   ]
+*/
+
+//WORKING: Use the spiral order traversal of a 2-D matrix and intialize it with a flag as incremented
+
+vector<vector<int> > Solution::generateMatrix(int A) {
+    vector<vector<int>> M;
+    M.resize(A, vector<int>(A));
+    int T = 0, L = 0, B = A - 1, R = A - 1, choose = 0, i, flag =1;
+    //T=top, B=bottom, L=left, R=right
+
+    while(T<=B && L<=R) {           //iterate till left isn't greater than right and top isn't greater than bottom
+        switch(choose) {
+            case 0:
+                    for(i = L; i<=R; i++) {
+                        M[T][i] = flag++;       //assign all the top row indices
+                    }
+                    T++;
+                    break;
+            case 1:
+                    for(i = T; i<=B; i++) {
+                        M[i][R] = flag++;       //assign all the right most column indices
+                    }
+                    R--;
+                    break;
+            case 2:
+                    for(i = R; i>=L; i--) {
+                        M[B][i] = flag++;       //assign all the bottom row indices
+                    }
+                    B--;
+                    break;
+            case 3:
+                    for(i = B; i>=T; i--) {
+                        M[i][L] = flag++;       //assign all the left most row indices
+                    }
+                    L++;
+                    break;
+            default: 
+                    std::cout<<"Inside default";
+                        break;
+        }
+        choose = (choose + 1) % 4;
+    }
+    return M;
+}
