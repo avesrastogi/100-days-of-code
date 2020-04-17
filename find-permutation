@@ -1,0 +1,58 @@
+//DAY 12/100
+/*
+Given a positive integer n and a string s consisting only of letters D or I, you have to find any permutation of first n positive integer that satisfy the given input string.
+
+D means the next number is smaller, while I means the next number is greater.
+
+Notes
+
+Length of given string s will always equal to n - 1
+Your solution should run in linear time and space.
+Example :
+
+Input 1:
+
+n = 3
+
+s = ID
+
+Return: [1, 3, 2]
+
+
+n = 5
+s = DDII
+Return: [5, 4, 1, 2, 3]
+*/
+
+
+
+vector<int> Solution::findPerm(const string A, int B) {
+    vector<int> X;
+    int max = B, min = 1;
+    if(B>=0) {
+        for(int i=0; i<B; i++) {
+            
+            if((i+1)==B) {
+                if(A[i-1]=='I') {                   //the string only has B-1 characters as D and I so for the Bth element of X, put an if case checking if the index is B and using it as A[B-1]
+                    X.emplace_back(min);
+                    min++;
+                }
+                else if(A[i-1]=='D') {
+                    X.emplace_back(max);
+                    max--;
+                }
+            }
+            
+            
+            if(A[i]=='I') {
+                X.emplace_back(min);              //keep updating minimum and maximum as I denotes the input of next larger element so input minimum and vice versa
+                min++;
+            }
+            else if(A[i]=='D') {
+                X.emplace_back(max);
+                max--;
+            }
+        }
+    }
+    return X;
+}
