@@ -1,0 +1,32 @@
+//DAY 14/100 
+/*
+Given an unsorted array, find the maximum difference between the successive elements in its sorted form.
+
+Try to solve it in linear time/space.
+
+Example :
+
+Input : [1, 10, 5]
+Output : 5 
+Return 0 if the array contains less than 2 elements.
+
+You may assume that all the elements in the array are non-negative integers and fit in the 32-bit signed integer range.
+You may also assume that the difference will not overflow.
+*/
+
+int Solution::maximumGap(const vector<int> &A) {
+    vector<int> B;
+    B=A;                            //can't sort a constant vector so create a copy vector
+    sort(B.begin(), B.end());       //sort the vector
+    int n = A.size(), i, d, max = 0;
+    if(n>1) {
+        for(i=0; i<n-1; i++) {
+            d = B[i+1] - B[i];          //find the difference of consecutive elements, also B[I+1] > B[i] because of sorting
+            if(max < d) {               //check if it is maximum
+                max = d;
+            }
+        }
+    }
+    return max;
+}
+
