@@ -1,0 +1,53 @@
+//DAY 16/100
+/*
+
+*/
+
+vector<int> Solution::repeatedNumber(const vector<int> &A) {
+    vector<int> B;
+    vector<int> C;
+    long int n = A.size(), i, flag;
+    B=A;
+    sort(B.begin(), B.end());
+    for(i=0; i<n; i++) {
+        if(B[i] == B[i+1]) {
+            C.emplace_back(B[i]);
+            flag=i;
+            break;
+        } 
+    }
+    for(i=0; i<n; i++) {
+        if(i<flag) {
+            if(B[i]!=(i+1)) {
+                C.emplace_back(i+1);
+                break;
+            }
+        }
+        if(i>flag) {
+            if(B[i]!=i) {
+                C.emplace_back(i);
+                break;
+            }
+        }
+    }
+    return C;
+}
+
+
+
+
+
+
+//BETTER TIME AND SPACE COMPLEXITY OF O(N) && O(1)
+
+vector<int> Solution::repeatedNumber(const vector<int> &A) {
+    long n=A.size(), sum = 0, square = 0;
+    for(int i=0; i<n; i++) {
+        sum += A[i];
+        square += (long)A[i] * (long)A[i];
+    }
+    long diff= n*(n+1)/2 - sum;
+    long a = n*(n+1)*(2*n+1)/6 - square;
+    long b = a/diff;
+    return {(b-diff)/2, (b+diff)/2};
+}
