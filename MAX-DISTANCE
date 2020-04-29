@@ -1,0 +1,53 @@
+//DAY 24/100
+/*
+Given an array A of integers, find the maximum of j - i subjected to the constraint of A[i] <= A[j].
+
+If there is no solution possible, return -1.
+
+Example :
+
+A : [3 5 4 2]
+
+Output : 2 
+for the pair (3, 4)
+
+
+//duplicacy case: I/P: [-1 -1 2] , O/P: 2
+
+*/
+
+int Solution::maximumGap(const vector<int> &A) {
+  int n = A.size();
+  if(n<=0) {
+    return 0;
+  }
+  
+  int i = 0, j = 0, m, mx = -1;
+  vector<int> left(n, 0), right(n, 0);
+  
+  left[0] = A[0];
+  for(int m = 1; m<n; m++) {
+    left[m] = min(left[m-1], A[m]);           //I/P: [3 5 4 2], left = [3 3 4 2]
+  }
+  
+  
+  right[n-1] = A[n-1];
+  for(int m = n-2; m>=0; m--) {
+    right[m] = max(right[m+1], A[m]);         //I/P: [3 5 4 2], right = [5 5 4 2]
+  }
+  
+  while(i<n && j<n) {
+    if(left[i] <= right[j]) {                     //left[0] <= right[0] if yes then j++ else i++
+      if(mx < j-i) {
+        mx = j-i;
+      }
+      j++;
+    }
+    
+    else {
+      i++;
+    }
+  }
+  
+  return mx;
+}
