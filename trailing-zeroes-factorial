@@ -1,0 +1,38 @@
+//DAY 30/100
+/*
+Given an integer n, return the number of trailing zeroes in n!.
+
+Note: Your solution should be in logarithmic time complexity.
+
+Example :
+
+n = 5
+n! = 120 
+Number of trailing zeros = 1
+So, return 1
+*/
+
+/* WORKING: For given number 4617.
+
+5^1 : 4617 ÷ 5 = 923.4, so we get 923 factors of 5
+
+5^2 : 4617 ÷ 25 = 184.68, so we get 184 additional factors of 5
+
+5^3 : 4617 ÷ 125 = 36.936, so we get 36 additional factors of 5
+
+5^4 : 4617 ÷ 625 = 7.3872, so we get 7 additional factors of 5
+
+5^5 : 4617 ÷ 3125 = 1.47744, so we get 1 more factor of 5
+
+5^6 : 4617 ÷ 15625 = 0.295488, which is less than 1, so stop here.
+
+Therefore, 4617! has 923 + 184 + 36 + 7 + 1 = 1151 trailing zeroes.
+*/
+
+int Solution::trailingZeroes(int A) {
+  int count=0;        //count the number of trailing zeroes
+  while(A>0) {
+    count+=A/5;                     //check for the number of zeroes for examble in case of 100 it'll give 20 but 20 is also divisible ny 5 
+    A=A/5;                          //so divide the number by 5 and produce it as the A again  
+  }
+}
