@@ -1,0 +1,72 @@
+//DAY 36/100
+/*
+Print concentric rectangular pattern in a 2d matrix.
+Let us show you some examples to clarify what we mean.
+
+Example 1:
+
+Input: A = 4.
+Output:
+
+4 4 4 4 4 4 4 
+4 3 3 3 3 3 4 
+4 3 2 2 2 3 4 
+4 3 2 1 2 3 4 
+4 3 2 2 2 3 4 
+4 3 3 3 3 3 4 
+4 4 4 4 4 4 4 
+Example 2:
+
+Input: A = 3.
+Output:
+
+3 3 3 3 3 
+3 2 2 2 3 
+3 2 1 2 3 
+3 2 2 2 3 
+3 3 3 3 3 
+The outermost rectangle is formed by A, then the next outermost is formed by A-1 and so on.
+
+You will be given A as an argument to the function you need to implement, and you need to return a 2D array.
+*/
+
+vector<vector<int> > Solution::prettyPrint(int A) {
+    int i=A, left=0, right=2*A-2, top=0, bottom=2*A-2, j;
+    vector<vector<int> > X(2*A-1, vector<int> (2*A-1));
+    while(left<=right && top<=bottom) {
+
+
+        for(j=left; j<=right; j++) {
+            X[top][j]=i;
+        } 
+        top++;
+        
+/*        if(left==right) {
+            break;
+        } 
+*/
+        
+        for(j=top; j<=bottom; j++) {
+            X[j][right]=i;            
+        }    
+        right--;            
+
+        for(j=right; j>=left; j--) {
+            X[bottom][j]=i;
+        }        
+        bottom--;
+        
+        for(j=bottom; j>=top; j--) {
+            X[j][left]=i;
+        }
+        left++;
+        i--;
+    }
+    return X;
+}
+
+
+
+
+
+
