@@ -1,0 +1,53 @@
+//DAY 43/100
+/*
+Given a string s consists of upper/lower-case alphabets and empty space characters ' ', return the length of last word in the string.
+
+If the last word does not exist, return 0.
+
+Note: A word is defined as a character sequence consists of non-space characters only.
+
+Example:
+
+Given s = "Hello World",
+
+return 5 as length("World") = 5.
+
+Please make sure you try to solve this problem without using library functions. Make sure you only traverse the string once.
+*/
+int Solution::lengthOfLastWord(const string A) {
+    int n=A.length();
+    int count=0, j=n-1, i=0, w_count=0, last_w_count=0;
+    
+    if(n==0) {
+        return 0;
+    }
+    
+    while(A[j]==' ') {
+        j--;
+        last_w_count++;         //whitespaces in "world  " or "hi there  "  
+    }
+    
+    int x=j;
+
+    while(j>=0) {
+        if(A[j]==' ') {
+            w_count++;          //whitespaces in "hi there" 
+        }
+        j--;
+    }
+    
+    if(w_count==0) {
+        return n-last_w_count;
+    }
+    
+    else {
+        
+        while(A[x]!=' ') {
+            count++;                //case for "hello there  " or "avni here"
+            x--;
+        }        
+    }
+
+    return count;
+}
+
