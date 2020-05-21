@@ -1,0 +1,52 @@
+//DAY 45/100
+/*
+Given an string A. The only operation allowed is to insert characters in the beginning of the string.
+
+Find how many minimum characters are needed to be inserted to make the string a palindrome string.
+
+
+
+Input Format
+
+The only argument given is string A.
+Output Format
+
+Return the minimum characters that are needed to be inserted to make the string a palindrome string.
+For Example
+
+Input 1:
+    A = "ABC"
+Output 1:
+    2
+    Explanation 1:
+        Insert 'B' at beginning, string becomes: "BABC".
+        Insert 'C' at beginning, string becomes: "CBABC".
+
+Input 2:
+    A = "AACECAAAA"
+Output 2:
+    2
+    Explanation 2:
+        Insert 'A' at beginning, string becomes: "AAACECAAAA".
+        Insert 'A' at beginning, string becomes: "AAAACECAAAA".
+
+*/
+
+int Solution::solve(string A) {
+    int len=A.size();
+    int i=0, end=len-1, j=end;
+    while(i<=j) {                       
+        if(A[i]==A[j]) {                //in BABB i is at 0 j is at 3
+            i++;                        //A[0]==A[3], i=1, j=2
+            j--;
+        }        
+        else {
+            i=0;                        //A[1]!=A[2]
+            j=--end;                    //i=0, j=(--3) i.e. 2, stay in the same position    
+        }
+    }
+
+    return len-end-1;
+}
+
+
