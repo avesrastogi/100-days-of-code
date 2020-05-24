@@ -1,0 +1,33 @@
+//DAY 47/100
+/*
+Add Binary Strings
+Asked in:  
+Facebook
+Microsoft
+Given two binary strings, return their sum (also a binary string).
+
+Example:
+
+a = "100"
+
+b = "11"
+Return a + b = “111”.
+
+
+*/
+
+string Solution::addBinary(string A, string B) {
+    int i=A.size()-1, j=B.size()-1, carry=0;
+    string ans="";
+    
+    while(i>=0 || j>=0 || carry) {      //if carry is 1 then case of 111 + 0 where leftover 11 will be carry value
+        carry+=((i>=0)? A[i]-'0' : 0);      //if A size is still not expend then carry =1+!=2
+        carry+=((j>=0)? B[j]-'0' : 0);
+        ans=char(carry%2+'0') + ans;           //ans=2%2 i.e. its binary value, '0' is to convert the value into char
+        carry=carry/2;                  //value of carry will be carry/2
+        i--;
+        j--;
+    }
+
+    return ans;
+}
