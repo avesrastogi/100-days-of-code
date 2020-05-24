@@ -1,0 +1,76 @@
+//DAY 46/100
+/*
+Roman To Integer
+Asked in:  
+Amazon
+Facebook
+Microsoft
+Twitter
+Given a string A representing a roman numeral.
+Convert A into integer.
+
+A is guaranteed to be within the range from 1 to 3999.
+
+NOTE: Read more
+details about roman numerals at Roman Numeric System
+
+
+
+Input Format
+
+The only argument given is string A.
+Output Format
+
+Return an integer which is the integer verison of roman numeral string.
+For Example
+
+Input 1:
+    A = "XIV"
+Output 1:
+    14
+
+Input 2:
+    A = "XX"
+Output 2:
+    20
+
+*/
+
+
+
+
+
+
+int getval(char c) {
+    switch(c) {
+        case 'I' : return 1;
+            break;
+        case 'V': return 5;
+            break;
+        case 'X' : return 10;
+            break;
+        case 'L' : return 50;
+            break;
+        case 'C' : return 100;
+            break;
+        case 'D' : return 500;
+            break;
+        case 'M' : return 1000;
+            break;
+        default: return 0;
+            break;
+    }
+}
+int Solution::romanToInt(string A) {
+    int len=A.size(), j=0;
+    int ans;
+    while(j<len) {
+            ans=ans+getval(A[j]);       //keep adding the integer part
+        if(j>0 && getval(A[j])>getval(A[j-1])) {      //but for case of XXIV, 'I'=1 is lesser than 'V'=5 
+            ans=ans-2*getval(A[j-1]);                 //so subract twice of of 'I'=1 from total value
+        }
+        j++;
+    }
+return ans;
+    
+}
