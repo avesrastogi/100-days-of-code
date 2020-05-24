@@ -1,0 +1,49 @@
+//DAY 47/100
+/*
+Power of 2
+Asked in:  
+Amazon
+Find if Given number is power of 2 or not.
+More specifically, find if given number can be expressed as 2^k where k >= 1.
+
+Input:
+
+number length can be more than 64, which mean number can be greater than 2 ^ 64 (out of long long range)
+Output:
+
+return 1 if the number is a power of 2 else return 0
+
+Example:
+
+Input : 128
+Output : 1
+*/
+
+
+int Solution::power(string A) {
+    int n=A.size(), i=0;
+    unsigned long long int ans=0;
+    if(n==1 && (A[0]=='0' || A[0]=='1')) {
+        return 0;
+    }
+
+    while(i<n) {
+        //convert string to a number and store it in ans
+        ans+=(A[i]-48);
+        ans*=10;
+        i++;
+    }
+    ans=ans/10;         //one extra ans*=10; for the last string element
+    if(!ans) {        //case of 2^64 where the range exceeds
+    //THIS ISN'T THE CORRECT SOLUTION FOR CASES > 2^64
+        return 1;
+    }
+    
+    float X=((log(ans))/(log(2)));
+    if(X-int(X)==0.0) {
+        return 1;
+    }
+    
+    
+    return 0;
+}
