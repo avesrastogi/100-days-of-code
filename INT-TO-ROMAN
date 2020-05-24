@@ -1,0 +1,45 @@
+//DAY 46/100
+/*
+Integer To Roman
+Input Format
+
+The only argument given is integer A.
+Output Format
+
+Return a string denoting roman numeral version of A.
+Constraints
+
+1 <= A <= 3999
+For Example
+
+Input 1:
+    A = 5
+Output 1:
+    "V"
+
+Input 2:
+    A = 14
+Output 2:
+    "XIV"
+
+*/
+
+
+string Solution::intToRoman(int A) {
+    int i=12, n;
+    string roman[13]={"I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M"};
+    int integer[13]={1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000};
+    string temp="";
+    while(i>=0) {
+        n=A/integer[i];           //EX: 59/integer[6]=1       //again n=9/integer[3] = 1
+        while(n--) {              //while(1-- i.e.  0)        //again while(1-- i.e. 0)
+            temp+=roman[i];       //temp=roman[6] i.e. temp=L       //temp=LIX
+        }
+        A=A%integer[i];           //A=59%50 = 9                     //A=9%9 = 0
+        i--;
+    }
+    return temp;                                //temp=LIX
+}
+
+
+
