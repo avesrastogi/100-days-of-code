@@ -1,0 +1,57 @@
+//DAY 48/100
+
+/*
+Multiply Strings
+Asked in:  
+Microsoft
+Google
+Given two numbers represented as strings, return multiplication of the numbers as a string.
+
+ Note: The numbers can be arbitrarily large and are non-negative.
+Note2: Your answer should not have leading zeroes. For example, 00 is not a valid answer. 
+For example,
+given strings "12", "10", your answer should be “120”.
+
+NOTE : DO NOT USE BIG INTEGER LIBRARIES ( WHICH ARE AVAILABLE IN JAVA / PYTHON ).
+We will retroactively disqualify such submissions and the submissions will incur penalties.
+*/
+
+
+string Solution::multiply(string A, string B) {
+    int m=A.size(), n=B.size();
+
+    if(A=="0" || B=="0") {
+        return "0";
+    }
+    
+    vector<int> ans(m+n, 0);
+    string result="";
+    for(auto i=m-1; i>=0; --i) {
+        for(auto j=n-1; j>=0; --j) {          
+            //multiply each element of B with A[0] then A[1]
+            ans[i+j+1]+=(A[i]-'0')*(B[j]-'0');      //index of ans is from 1
+        }
+    }
+    
+    for(auto k=m+n-1; k>=0; k--) {
+        if(ans[k]>=10) {            //case of ans[3]=81 (9*9)
+            ans[k-1]+=ans[k]/10;         //ans[2]=8
+            ans[k]%=10;                 //ans[3]=1
+        }
+    }
+
+    int count=0;
+    for(auto i=0; i<ans.size(); i++) {          //index of ans is 1 to m+n-1
+        if(ans[i]==0 && i==count) {
+            count++;                //for case 00398 to remove 00
+            //it will not push 00 inside result for i==count
+        }
+        else {
+            result+=ans[i]+'0';
+        }
+    }
+
+
+
+    return result;
+}
