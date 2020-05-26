@@ -1,0 +1,46 @@
+//DAY 49/100
+/*
+It’s a type which is used to represent the size of objects in bytes and is therefore used as the return type by the sizeof operator. It is guaranteed to be big enough to contain the size of the biggest object the host system can handle. Basically the maximum permissible size is dependent on the compiler; if the compiler is 32 bit then it is simply a typedef(i.e., alias) for unsigned int but if the compiler is 64 bit then it would be a typedef for unsigned long long. 
+
+Implement StrStr
+Asked in:  
+Facebook
+Amazon
+Qualcomm
+Wipro
+Microsoft
+Please Note:
+Another question which belongs to the category of questions which are intentionally stated vaguely.
+Expectation is that you will ask for correct clarification or you will state your assumptions before you start coding.
+
+Implement strStr().
+
+ strstr - locate a substring ( needle ) in a string ( haystack ). 
+Try not to use standard library string functions for this question.
+
+Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+
+ NOTE: Good clarification questions:
+What should be the return value if the needle is empty?
+What if both haystack and needle are empty?
+For the purpose of this problem, assume that the return value should be -1 in both cases.
+
+
+
+*/
+
+
+
+int Solution::strStr(const string A, const string B) {
+  size_t found=A.find(B);     //size_t alias for unsigned ll, or ll
+  
+  if(found!=string::npos) {         
+  
+  //n_pos an alias for string bounds, INT_MAX of size_t type
+  //It is better to compare to npos instead of -1 because the code is more legible.
+  
+    return found;
+  }
+
+  return -1;
+}
