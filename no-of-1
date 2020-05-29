@@ -1,0 +1,49 @@
+//DAY 51/100
+/*
+Number of 1 Bits
+Asked in:  
+Adobe
+Yahoo
+Write a function that takes an unsigned integer and returns the number of 1 bits it has.
+
+Example:
+
+The 32-bit integer 11 has binary representation
+
+00000000000000000000000000001011
+so the function should return 3.
+
+Note that since Java does not have unsigned int, use long for Java
+*/
+
+//BRUTE_FORCE
+int Solution::numSetBits(unsigned int A) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+
+    int count=0, i=0;
+    vector<int> X(32, 0);
+    while(A>0) {
+        X[i]=A%2;
+        if(X[i]==1) {
+            count++;
+        }
+        A=A/2;
+        i++;
+    }
+    
+    return count;
+}
+
+
+//OPTIMIZED
+        unsigned int numSetBits(unsigned int x) {
+            unsigned int total_ones = 0;
+            while (x != 0) {
+                x = x & (x-1);      //a trick to set all the bits to zero i.e to set all the ones to zero, thereby calculating the no. of ones
+                total_ones++;
+            }
+            return total_ones;
+        }
