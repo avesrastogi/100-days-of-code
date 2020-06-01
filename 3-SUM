@@ -1,0 +1,42 @@
+//DAY 55/100
+/*
+
+*/
+
+
+
+int Solution::threeSumClosest(vector<int> &A, int B) {
+    sort(A.begin(),A.end());
+    long ans = 0, diff=INT_MAX;
+    int n = A.size();
+    
+    for(int i=0;i<n-1;i++)
+    {
+        int j=i+1;
+        int k = n-1;
+        
+        while(j<k) {
+            long sum = (long)A[i]+(long)A[j]+(long)A[k];      //ex: -4, -1, 1, 2: A[0] + A[1] + A[3]
+            
+            if(abs(sum-B)<diff) {                             //least value of sum-B will get stored in diff and which sum gives least value of diff gets stored in ans
+                diff=abs(sum-B);
+                ans=sum;
+            }
+            
+            if(sum>B) {                                       //if sum is greater than target lessen it by changing the largest number
+                k--;
+            }
+            else {                                            //or increase the sum by incrementing j towards greater value in A
+                j++;
+            }
+        
+        }
+        if(diff==0) {                                         //when target is present in A
+            break;
+        }
+        
+        
+    }
+    
+    return ans;
+}
