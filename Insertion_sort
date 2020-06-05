@@ -1,0 +1,68 @@
+//DAY 59/100
+/*
+Insertion Sort List
+Asked in:  
+Microsoft
+Google
+Sort a linked list using insertion sort.
+
+We have explained Insertion Sort at Slide 7 of Arrays
+
+Insertion Sort Wiki has some details on Insertion Sort as well.
+
+Example :
+
+Input : 1 -> 3 -> 2
+
+Return 1 -> 2 -> 3
+*/
+
+
+
+
+
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+ 
+ 
+ 
+void Insert_sort(ListNode *&head2, ListNode *newnode) {
+    
+    ListNode *p;
+
+    if(head2==NULL || head2->val >= newnode->val) {
+        newnode->next=head2;
+        head2=newnode;
+    }
+    else {
+        p=head2;
+        while(p->next && p->next->val < newnode->val) {
+            p=p->next;
+        }
+        newnode->next=p->next;              //p stores the prev of current ptr
+        p->next=newnode;                    //allows the prev and current ptr access
+    }
+} 
+ 
+ 
+
+ListNode* Solution::insertionSortList(ListNode* A) {
+    ListNode *sorted = NULL;                   //sorted list in insertion sort
+    ListNode *current = A;
+    while(current) {
+        ListNode *q=current->next;               //next node after current for further sorting, iteration point of view
+        Insert_sort(sorted, current);
+        current=q;                              //to proceed the loop
+    }
+    
+    A=sorted;                                   //sorted holds the head of the sorted list, so update
+    return A;
+}
