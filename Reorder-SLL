@@ -1,0 +1,80 @@
+//DAY 65/100
+/*
+Reorder List
+Asked in:  
+Amazon
+Microsoft
+Given a singly linked list
+
+    L: L0 → L1 → … → Ln-1 → Ln,
+reorder it to:
+
+    L0 → Ln → L1 → Ln-1 → L2 → Ln-2 → …
+You must do this in-place without altering the nodes’ values.
+
+For example,
+Given {1,2,3,4}, reorder it to {1,4,2,3}
+*/
+
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+ 
+ListNode* find_mid(ListNode *head) {
+    ListNode *p=head;
+    ListNode *q=p->next;
+    
+    while(q && q->next) {
+        p=p->next;
+        q=q->next->next;
+    }
+    //cout<<p->val;
+    return p;
+ }
+ 
+ 
+ListNode* reverse_sll(ListNode* head2) {
+    
+    ListNode* p=head2, *q=NULL, *temp=NULL;
+    while(p!=NULL) {
+        temp=q;
+        q=p;
+        p=p->next;
+        q->next=temp;
+    }
+    head2=q;
+    //cout<<q->val;
+    return head2; 
+}
+
+ListNode* Solution::reorderList(ListNode* A) {          //find mid, reverse, relink
+    if(A==NULL) {
+        return NULL;
+    }
+    
+    ListNode *p=A;
+    ListNode *q=find_mid(A);
+    ListNode *r=reverse_sll(q);
+    ListNode *forward_p=NULL, *forward_r=NULL;
+    ListNode *result=p;
+    //cout<<r->val;
+    while(p!=r && p!=NULL && r!=NULL) {
+        //cout<<p->val<<" "<<r->val<<" ";
+        forward_r=r->next;
+        forward_p=p->next;
+        p->next=r;
+        r->next=forward_p;
+        p=forward_p;
+        r=forward_r;
+        //cout<<p->val<<" "<<r->val<<" ";
+    }
+    
+    return result;
+}
