@@ -1,0 +1,29 @@
+//DAY 69/100
+/*
+Reverse String
+Given a string S, reverse the string using stack.
+
+Example :
+
+Input : "abc"
+Return "cba"
+*/
+
+
+
+
+string Solution::reverseString(string A) {
+    stack <char> X;
+    char c;
+    string res="";
+    for(int i=0; i<A.size(); i++) {
+        c=A[i];
+        X.push(c);
+    }
+    
+    while(!X.empty()) {
+        res+=X.top();
+        X.pop();
+    }
+    return res;
+}
