@@ -1,0 +1,74 @@
+//DAY 70/100
+/*
+
+
+Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
+
+push(x) – Push element x onto stack.
+pop() – Removes the element on top of the stack.
+top() – Get the top element.
+getMin() – Retrieve the minimum element in the stack.
+Note that all the operations have to be constant time operations.
+
+Questions to ask the interviewer :
+
+Q: What should getMin() do on empty stack? 
+A: In this case, return -1.
+
+Q: What should pop do on empty stack? 
+A: In this case, nothing. 
+
+Q: What should top() do on empty stack?
+A: In this case, return -1
+ NOTE : If you are using your own declared global variables, make sure to clear them out in the constructor.
+*/
+
+
+
+
+
+
+stack<pair<int, int>> X;
+MinStack::MinStack() {
+    stack<pair<int, int>> replica;
+    X=replica;
+}
+
+void MinStack::push(int x) {
+    if(X.empty()) {
+        X.push({x,x});
+    }
+    else {
+        if(x<X.top().second) {                 //the mapped part i.e X['(']=')', this second part
+            X.push({x,x});
+        }
+        else {
+            X.push({x, X.top().second});            //updates the key with appropriate value
+        }
+    }
+}
+
+void MinStack::pop() {
+    if(!X.empty()) {
+        X.pop();
+    }
+}
+
+int MinStack::top() {
+    if(X.empty()) {
+        return -1;
+    }
+    else {
+        return X.top().first;                       //returns the key   
+    }
+}
+
+int MinStack::getMin() {
+    if(!X.empty()) {
+        return X.top().second;                      //returns the value
+    }
+    else {
+        return -1;
+    }
+}
+
