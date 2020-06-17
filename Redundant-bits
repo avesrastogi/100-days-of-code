@@ -1,0 +1,76 @@
+//DAY 70/100
+/*
+Redundant Braces
+Asked in:  
+Amazon
+Given a string A denoting an expression. It contains the following operators ’+’, ‘-‘, ‘*’, ‘/’.
+
+Chech whether A has redundant braces or not.
+
+Return 1 if A has redundant braces, else return 0.
+
+Note: A will be always a valid expression.
+
+
+
+Input Format
+
+The only argument given is string A.
+Output Format
+
+Return 1 if string has redundant braces, else return 0.
+For Example
+
+Input 1:
+    A = "((a + b))"
+Output 1:
+    1
+    Explanation 1:
+        ((a + b)) has redundant braces so answer will be 1.
+
+Input 2:
+    A = "(a + (a + b))"
+Output 2:
+    0
+    Explanation 2:
+        (a + (a + b)) doesn't have have any redundant braces so answer will be 0.
+*/
+
+
+
+/*WORKING:
+This problem considers those pair braces as redundant that do not have any operation performed between them. For example consider ((a+b)). Here the inside pair is valid as it has a+b inside it. Now let a+b = c. The outer pair thus becomes invalid as it has no operators only has a number ‘c’ between it.
+*/
+
+
+
+
+
+
+
+int Solution::braces(string A) {
+    stack <char> X;
+    for(int i=0; i<A.length(); i++) {
+        if(A[i]=='+' || A[i]=='-' || A[i]=='*' || A[i]=='/' || A[i]=='(') {         //in case of ((a+b)) push (,(,+ in stack X
+            X.push(A[i]);
+        }
+        else if(A[i]==')') {                //case of ), ) in the example
+            int flag=0;
+            while(X.top()!='(') {
+                X.pop();                    //pop the elements till '(' is reached
+                flag++;
+            }
+            X.pop();                        //pop the reached '(' element from stack
+            
+            
+            if(flag==0) {                   //case of encountering
+                return 1;
+            }
+        }
+        else {
+            continue;                   //case of operands a, b
+        }
+    } 
+    
+    return 0;                   //no redundant bits
+}
