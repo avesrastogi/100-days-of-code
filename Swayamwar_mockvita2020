@@ -1,0 +1,68 @@
+#include<bits/stdc++.h>
+#include<iostream>
+#include <cstdio>
+#include<queue>
+#include<string>
+using namespace std;
+
+
+
+
+int main() {
+    
+    
+    //input
+    int N;
+    cin>>N;
+    
+    
+    string strB, strG;
+
+    
+    cin>>strB;
+    cin>>strG;
+
+
+    //queue storage
+    queue <char> B;
+    queue <char> G;
+    
+    
+    for(int i=0; i<N; i++) {
+        B.push(strB[i]);
+    }
+    
+    for(int i=0; i<N; i++) {
+        G.push(strG[i]);
+    }
+    
+    int paired=0, no_com = 0 ;
+    while(!B.empty()) {
+        
+        if(B.front()!=G.front()) {
+            char temp=G.front();
+            G.pop();
+            G.push(temp);
+            no_com++;
+            if(G.size()==no_com) {
+				break;
+            }
+        }
+        
+    
+        if(B.front()==G.front()) {
+            
+            //if both drink the same alcohol
+            B.pop();
+            G.pop();
+            paired++;
+            
+            no_com=0;
+        }
+    }
+    
+    
+    cout<<N-paired;
+    return 0;
+    
+}
