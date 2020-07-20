@@ -1,0 +1,124 @@
+//DAY 90/100
+/*
+Subarray with given XOR
+Asked in:  
+dunzo
+Problem Description
+
+Given an array of integers A and an integer B.
+
+Find the total number of subarrays having bitwise XOR of all elements equals to B.
+
+
+
+Problem Constraints
+1 <= length of the array <= 105
+
+1 <= A[i], B <= 109
+
+
+
+Input Format
+The first argument given is the integer array A.
+The second argument given is integer B.
+
+
+
+Output Format
+Return the total number of subarrays having bitwise XOR equals to B.
+
+
+
+Example Input
+Input 1:
+
+ A = [4, 2, 2, 6, 4]
+ B = 6
+Input 2:
+
+ A = [5, 6, 7, 8, 9]
+ B = 5
+
+
+Example Output
+Output 1:
+
+ 4
+Output 2:
+
+ 2
+
+
+Example Explanation
+Explanation 1:
+
+ The subarrays having XOR of their elements as 6 are:
+ [4, 2], [4, 2, 2, 6, 4], [2, 2, 6], [6]
+Explanation 2:
+
+ The subarrays having XOR of their elements as 2 are [5] and [5, 6, 7, 8, 9]
+*/
+
+
+
+
+
+
+
+
+
+
+
+/*int Solution::solve(vector<int> &A, int B) {
+    unordered_map <int, bool> X;
+    int count=0;
+    for(int i=0; i<A.size(); i++) {
+        int xor_sub = 0;
+        for(int j=i; j<A.size(); j++) {
+            xor_sub = xor_sub ^ A[j];
+
+            if(xor_sub==B) {
+                //X[xor_sub]=true;
+                count++;
+            }
+            /*else {
+                X[xor_sub]=false;
+            }
+        }
+    }
+    
+    return count;
+}*/
+
+
+//linear solution
+
+int Solution::solve(vector<int> &A, int B) {
+    //find the prefix as the xor of vector elements with one another, ex: [4,2,2,6,4]; prefix = 4^2, 4^2^2, 4^2^2^6...
+    int prefix[A.size()];
+    unordered_map <int, int> X;
+    int res=0 /*number of subarray */, x_or = 0;
+    
+    for(int i=0; i<A.size(); i++) {
+        x_or ^= A[i];
+        prefix[i]=x_or;
+    }
+    
+    //map the prefix[i] as key and its frequency as count in X
+    for(int i=0; i<A.size(); i++) {
+        //if the prefix is itself a subarray increment res
+        if(prefix[i]==B) {
+            res++;
+        }
+        
+        //from 0 to i to j if xor i+1 to j : B(z); and xor 0 to j: prefix(y); find xor 0 to i: x xor y
+        res+=X[B^prefix[i]];
+        X[prefix[i]]++;
+    }
+    
+    return res;
+}
+
+
+
+
