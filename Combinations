@@ -1,0 +1,89 @@
+//DAY 91/100
+/*
+
+Combinations
+Asked in:  
+Amazon
+Adobe
+Given two integers n and k, return all possible combinations of k numbers out of 1 2 3 ... n.
+
+Make sure the combinations are sorted.
+
+To elaborate,
+
+Within every entry, elements should be sorted. [1, 4] is a valid entry while [4, 1] is not.
+Entries should be sorted within themselves.
+Example :
+If n = 4 and k = 2, a solution is:
+
+[
+  [1,2],
+  [1,3],
+  [1,4],
+  [2,3],
+  [2,4],
+  [3,4],
+]
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void combination(vector<vector<int>> &res, vector<int> &temp, int A, int B, int index) {
+    
+    //ex: 5 , 3; temp = {1, 2, 3}, and temp.size == 3, so push it in res and exit the func. call
+    if(temp.size()==B) {
+        res.push_back(temp);    
+        return;
+    }
+    
+    
+    //no need to use else because return is used in above if statement
+    for(; index<=A; index++) {                  //iterate till 8th number is reached
+        //for ex: 5, 3; temp = {1}, temp = {1, 2}, temp = {1, 2, 3}, pop 3 and add 4, pop 4 and 5
+        //now after index=5 is popped temp = {1, 2} pop 2, add 3, temp = {1, 3} add 4...5 
+        //similarly for {1, 5} statement 2 is executed
+        //then 5 is popped, 1 is popped, and temp={2} and so on
+        
+        temp.push_back(index);              
+        combination(res, temp, A, B, index+1);
+        temp.pop_back();
+    }
+    
+    return;     //2
+}
+
+
+
+
+vector<vector<int> > Solution::combine(int A, int B) {
+    vector<vector<int>> res;
+    //if no pairing is done return nothing as result: {}
+    if(B==0) {
+        return {{}};
+    }
+    
+    //if pairs is more than available numbers return NULL 
+    if(A<B) {
+        return res;
+    }
+    
+    vector<int> temp;
+    
+    
+    combination(res, temp, A, B, 1);            //pass index=1
+    
+    return res;
+}
