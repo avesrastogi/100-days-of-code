@@ -1,0 +1,90 @@
+//DAY 92/100
+/*
+
+Combination Sum
+Asked in:  
+Facebook
+Amazon
+Adobe
+Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
+
+The same repeated number may be chosen from C unlimited number of times.
+
+ Note:
+All numbers (including target) will be positive integers.
+Elements in a combination (a1, a2, … , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤ … ≤ ak).
+The combinations themselves must be sorted in ascending order.
+CombinationA > CombinationB iff (a1 > b1) OR (a1 = b1 AND a2 > b2) OR … (a1 = b1 AND a2 = b2 AND … ai = bi AND ai+1 > bi+1)
+The solution set must not contain duplicate combinations.
+Example,
+Given candidate set 2,3,6,7 and target 7,
+A solution set is:
+
+[2, 2, 3]
+[7]
+
+*/
+
+
+
+
+
+void combination(vector<vector<int>> &res, vector<int> &temp, vector<int> A, int B, int index, int sum) {
+    if(sum==B) {
+        /*for(int i=0; i<temp.size(); i++) {
+            cout<<temp[i];
+        }*/
+        res.push_back(temp);
+        return;
+    }
+    
+    if(sum>B) {
+        return;
+    }
+    
+    for(; index<A.size(); index++) {
+        
+        if(sum<B) {
+            sum+=A[index];
+            temp.push_back(A[index]);
+            combination(res, temp, A, B, index, sum);
+            sum-=temp[temp.size()-1];
+            temp.pop_back();
+        }
+
+    }
+    return;
+}
+
+
+vector<vector<int> > Solution::combinationSum(vector<int> &A, int B) {
+    if(B==0) {
+        return {{}};
+    }
+    
+    vector<vector<int>> res;
+    
+    if(A.empty()) {
+        return res;
+    }
+    
+    sort(A.begin(), A.end());
+    vector<int> temp;
+    
+    int index = 0, sum=0;
+    combination(res, temp, A, B, index, sum);
+    
+    
+    sort(res.begin(), res.end());
+    res.erase( unique( res.begin(), res.end() ), res.end() );
+
+    return res;
+}
+
+
+
+
+/*
+[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ] [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 6 ] [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 8 ] [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 10 ] [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 11 ] [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 6 6 ] [1 1 1 1 1 1 1 1 1 1 1 1 1 1 6 8 ] [1 1 1 1 1 1 1 1 1 1 1 1 6 10 ] [1 1 1 1 1 1 1 1 1 1 1 1 8 8 ] [1 1 1 1 1 1 1 1 1 1 1 1 16 ] [1 1 1 1 1 1 1 1 1 1 1 6 11 ] [1 1 1 1 1 1 1 1 1 1 6 6 6 ] [1 1 1 1 1 1 1 1 1 1 8 10 ] [1 1 1 1 1 1 1 1 1 8 11 ] [1 1 1 1 1 1 1 1 6 6 8 ] [1 1 1 1 1 1 1 1 10 10 ] [1 1 1 1 1 1 1 10 11 ] [1 1 1 1 1 1 6 6 10 ] [1 1 1 1 1 1 6 8 8 ] [1 1 1 1 1 1 6 16 ] [1 1 1 1 1 1 11 11 ] [1 1 1 1 1 6 6 11 ] [1 1 1 1 6 6 6 6 ] [1 1 1 1 6 8 10 ] [1 1 1 1 8 8 8 ] [1 1 1 1 8 16 ] [1 1 1 6 8 11 ] [1 1 6 6 6 8 ] [1 1 6 10 10 ] [1 1 8 8 10 ] [1 1 10 16 ] [1 6 10 11 ] [1 8 8 11 ] [1 11 16 ] [6 6 6 10 ] [6 6 8 8 ] [6 6 16 ] [6 11 11 ] [8 10 10 ]
+
+*/
