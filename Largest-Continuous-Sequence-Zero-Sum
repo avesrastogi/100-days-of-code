@@ -1,0 +1,60 @@
+//DAY 93/100
+/*
+
+Largest Continuous Sequence Zero Sum
+Asked in:  
+Microsoft
+Find the largest continuous sequence in a array which sums to zero.
+
+Example:
+
+
+Input:  {1 ,2 ,-2 ,4 ,-4}
+Output: {2 ,-2 ,4 ,-4}
+
+ NOTE : If there are multiple correct answers, return the sequence which occurs first in the array.
+*/
+
+
+
+
+
+
+vector<int> Solution::lszero(vector<int> &A) {
+    unordered_map<int, int> X;           //sum as key, the start and end elements as value
+    int sum=0, x=0, y=0, flag=0, curr = 0, diff = -1;//diff can be 0 too so use -1
+    vector<int> result;
+    X[0]=-1;
+    
+    for(int i=0; i<A.size(); i++){
+        sum = sum+A[i];
+        //cout<<sum<<" ";
+        // checking the portion size so that we can get the largest sequence whose sum=0
+        // store start and end of that portion in x and y 
+        if(X.find(sum)!=X.end()) {
+            flag=1;
+            //cout<<"no";
+            //change the starting and ending addr only if the there is a larger subset with with sum=0
+            curr = i-X[sum]+1;
+            if(curr > diff) {
+                diff = curr;
+                x = X[sum]+1;       //save the starting addr.
+                y = i;              //save the ending addr.
+            }
+        }
+        else {
+            //cout<<"s";
+            X[sum]=i;
+        }
+    }
+    
+    if(flag==0) {
+        return result;
+    }
+    
+    //cout<<"here";
+    for(int i=x; i<=y; i++) {
+        result.push_back(A[i]);
+    }
+    return result;
+}
