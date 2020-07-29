@@ -1,0 +1,75 @@
+//DAY 97/100
+/*
+Points on the Straight Line
+Asked in:  
+Google
+Amazon
+InMobi
+Given n points on a 2D plane, find the maximum number of points that lie on the same straight line.
+
+Sample Input :
+
+(1, 1)
+(2, 2)
+Sample Output :
+
+2
+You will be given 2 arrays X and Y. Each point is represented by (X[i], Y[i])
+*/
+
+
+
+
+
+int Solution::maxPoints(vector<int> &A, vector<int> &B) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+
+    if(A.size()==0 || B.size()==0) {
+        return 0;
+    }
+    
+    unordered_map<double, int> X;
+    int res=0;
+
+    //there can be two lines ex: 1,1; 1,3; 2,2; 2,3; 2,4, here 2,2 line has 3 points while 1,1 has 2 points
+    //use two loops to check 1,1 with all points and then 1,3 with all points and so on
+    for(int i=0; i<A.size(); i++) {
+        for(int j=0; j<A.size(); j++) {
+            //start with i!=j
+            if(i!=j) {
+                int x = A[i];
+                int y = B[i];
+                int temp_x = A[j];
+                int temp_y = B[j];
+                
+                //case of 1/0, denominator being zero means inf so use INT_MAX as count
+                if((temp_y-y)==0) {
+                    X[INT_MAX]++;
+                }
+                
+                else {
+                    //slope can be made double using denominator * 1.0
+                    double m = (temp_y-y)/((temp_x-x)*1.0);
+                    //store key as slope(m) and count as value
+                    X[m]++;
+                }
+            
+            }
+        }
+        
+        //find the max points on a line after each i loop
+        for(auto i: X) {
+            if(i.second > res) {
+                res=i.second;
+            }
+        }
+        
+        //clear the hash map for 1,2 iteration
+        X.clear();
+    }
+
+    return res+1;
+}
