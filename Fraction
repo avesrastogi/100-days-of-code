@@ -1,0 +1,76 @@
+//DAY 96/100
+/*
+Fraction
+Asked in:  
+Amazon
+Microsoft
+Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.
+
+If the fractional part is repeating, enclose the repeating part in parentheses.
+
+Example :
+
+Given numerator = 1, denominator = 2, return "0.5"
+Given numerator = 2, denominator = 1, return "2"
+Given numerator = 2, denominator = 3, return "0.(6)"
+*/
+
+
+
+
+string Solution::fractionToDecimal(int A, int B) {
+    if(A==0) {
+        return "0";
+    }
+    
+
+    
+    string res="";
+    
+    if((A<0 && B>0)|| (A>0 && B<0)) {
+        //cout<<"hm";
+        res+="-";
+    }
+    
+    long long int divisor = abs(long(A));       //for recurring quotients the length of numbers may increase
+    long long int dividend= abs(long(B));
+    long long int rem = divisor%dividend;
+    //cout<<rem;
+    //cout<<divisor<<dividend;
+    //cout<<quo;
+    
+    res+=to_string(divisor/dividend);
+
+    if(rem==0) {
+        return res;
+    }
+    
+    res+=".";
+    int i=res.length();     //the place where we'll place '('
+    
+    //cout<<res<<" ";
+    //map remainder, i as key, value pair
+    unordered_map<long, int> X;
+    while(rem!=0) {
+        if(X.find(rem)!=X.end()) {
+            //insert requires position and X[rem] returns i which is the position to place '('
+            res.insert(X[rem], "(");
+            res.append(")");
+            break;
+        }
+        
+        //map i with the res length
+        X[rem]=i;
+        i++;
+        //every time we add 0 to rem i.e 20/3 rem=2, so 2*10=20 i.e. rem and res will appended with rem/dividend
+        rem*=10;
+        res.append(to_string(rem/dividend));
+        //cout<<" "<<res<<" ";
+        
+        //again find new rem
+        rem%=dividend;
+
+    }
+    
+    return res;
+}
