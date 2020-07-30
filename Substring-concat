@@ -1,0 +1,59 @@
+//DAY 99/100
+/*
+Substring Concatenation
+Asked in:  
+Facebook
+You are given a string, S, and a list of words, L, that are all of the same length.
+
+Find all starting indices of substring(s) in S that is a concatenation of each word in L exactly once and without any intervening characters.
+
+Example :
+
+S: "barfoothefoobarman"
+L: ["foo", "bar"]
+You should return the indices: [0,9].
+(order does not matter).
+
+*/
+
+
+
+
+vector<int> Solution::findSubstring(string A, const vector<string> &B) {
+    
+    //two maps, X1 for B, X2 for A substrings of length B[0]
+    unordered_map <string, int> X1, X2;
+    vector<int> res;
+
+    for(auto i: B) {
+        //store strings in B in map 1 with string, int as key, value pair
+        X1[i]++;    
+        
+    }
+    
+    //len is lenght of whole string in B i.e. foobar (len=6 i.e. 2 * 3)
+    int list_len = B[0].length();
+    int len = (B.size()) * list_len;
+    //cout<<list_len<<len;
+    if(len>A.length()) {
+        return res;
+    }
+    
+    for(int i=0; i<A.size()-len+1; i++) {
+        //cout<<"i:"<<i<<" ";
+        for(int j=i; j<i+len; j+=list_len) {
+            //cout<<"j:"<<j<<" ";
+            //create substrings from 0,6; 1,7; i+len;
+            string sub = A.substr(j, list_len);
+            X2[sub]++;
+        }
+
+        if(X1==X2) {
+            res.push_back(i);  
+        }
+        //cout<<"hi";
+
+        X2.clear();
+    }
+    return res;
+}
