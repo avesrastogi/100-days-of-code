@@ -1,0 +1,90 @@
+//DAY 100/100
+/*
+Inorder Traversal of Cartesian Tree
+Asked in:  
+Amazon
+Given an inorder traversal of a cartesian tree, construct the tree.
+
+ Cartesian tree : is a heap ordered binary tree, where the root is greater than all the elements in the subtree. 
+ Note: You may assume that duplicates do not exist in the tree. 
+Example :
+
+Input : [1 2 3]
+
+Return :   
+          3
+         /
+        2
+       /
+      1
+*/
+
+
+
+
+
+TreeNode* tree_rec(vector<int> &A, int start, int &end, int level) {   
+    TreeNode *node = new TreeNode(A[start]);
+    int i, prev;
+    for ( i = start + 1, prev = start; i < A.size() && A[i] < level; ) {
+        
+        if ( A[i] > A[prev] ) {
+            TreeNode *new_node = new TreeNode(A[i]);
+            new_node->left = node;
+            node = new_node;
+            prev = i++;
+        } 
+        
+        else {
+            node->right = tree_rec(A, i, i, A[prev]);
+        }
+    }
+
+    end = i;
+    return node; 
+}
+
+
+TreeNode* Solution::buildTree(vector<int> &A) {
+    int i;
+    return tree_rec(A, 0, i, INT_MAX);
+}
+
+
+
+
+
+/*
+//O(n2)
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+TreeNode* recur(vector<int> &A, int start, int end) {
+    //same as maxheap, maximum element will always be the root
+    
+    //termination condition for function
+    if(start>end) {
+        return NULL;
+    }
+    
+    //same as quick sort, a bit
+    //find mid element, use -A.begin() for cases of second level max element for right subtree with a differ4ent A.begin()
+    int mid = max_element(A.begin(), A.begin()+(end+1))-A.begin();
+    TreeNode *root = new TreeNode(A[mid]);
+    root->left = recur(A, start, mid-1);
+    root->right = recur(A, mid+1, end);
+    
+    return root;
+} 
+ 
+TreeNode* Solution::buildTree(vector<int> &A) {
+    //call a recursive function
+    return recur(A, 0, A.size()-1);    
+}
+*/
