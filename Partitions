@@ -1,0 +1,132 @@
+//DAY 100/100
+/*
+https://www.interviewbit.com/problems/partitions/
+Partitions
+Asked in:  
+EzCred
+Problem Description
+
+You are given a 1D integer array B containing A integers.
+
+Count the number of ways to split all the elements of the array into 3 contiguous parts so that the sum of elements in each part is the same.
+
+Such that : sum(B[1],..B[i]) = sum(B[i+1],...B[j]) = sum(B[j+1],...B[n])
+
+
+
+Problem Constraints
+1 <= A <= 105
+
+-109 <= B[i] <= 109
+
+
+
+Input Format
+First argument is an integer A.
+
+Second argument is an 1D integer array B of size A.
+
+
+
+Output Format
+Return a single integer denoting the number of ways to split the array B into three parts with the same sum.
+
+
+
+Example Input
+Input 1:
+
+ A = 5
+ B = [1, 2, 3, 0, 3]
+Input 2:
+
+ A = 4
+ B = [0, 1, -1, 0]
+
+
+Example Output
+Output 1:
+
+ 2
+Output 2:
+
+ 1
+
+
+Example Explanation
+Explanation 1:
+
+ There are no 2 ways to make partitions -
+ 1. (1,2)+(3)+(0,3).
+ 2. (1,2)+(3,0)+(3).
+Explanation 2:
+
+ There is only 1 way to make partition -
+ 1. (0)+(-1,1)+(0).
+*/
+
+
+
+
+
+
+
+
+
+
+int Solution::solve(int A, vector<int> &B) {
+    //if <3 integers then we can't find sum
+    if(A<3) {
+        return 0;
+    }
+    
+    //S1+S2+S3 = S i.e 3S'=Sum, sum should be completely divisible by 3
+    int sum=0;
+    for(int i=0; i<A; i++) {
+        sum+=B[i];
+    }
+    
+    if(sum%3!=0) {
+        return 0;
+    }
+    
+    //we need the contiguous indices sum to be S1
+    int S1=sum/3, count=0, x=0;
+    vector<int> prefix, suffix;
+    for(int i=0; i<A; i++) {
+        x+= B[i];
+        if(x==S1) {
+            //push in the index 1 for {1, 2, 3, 0, 3} where the sum becomes S1
+            prefix.push_back(i);
+        }
+    }
+    
+    x=0;
+    for(int i=A-1; i>=0; i--) {
+        x+= B[i];
+        if(x==S1) {
+            //push in the index 1 for {1, 2, 3, 0, 3} where the sum becomes S1
+            suffix.push_back(i);
+        }
+    }    
+    
+    //for each prefix attach suffix and find elements in between with sum as S1
+    for(int i=0; i<prefix.size(); i++) {
+        for(int j=0; j<suffix.size(); j++) {
+            x=0;
+            int flag=0;
+            for(int k=prefix[i]+1; k<suffix[j]; k++) {
+                x+=B[k];
+                flag=1;
+            }
+            
+            //check if the elements in between prefix {1} and suffix{3, 4} have elements with sum==s1
+            //flag is used to in case of required sum S1=0, then irrespective of not being present between prefix and suffix count will be incremented
+            //hence to prevent that we use flag here
+            if(x==S1 && flag==1) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
