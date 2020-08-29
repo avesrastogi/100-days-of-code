@@ -23,29 +23,67 @@ We see that two pairs [1, 1] and [1, 3] give same number of 1s in final string. 
 
 */
 
+
+
+
+
+
 vector<int> Solution::flip(string A) {
-  int n = A.size();
-  int left = -1, right = -1, l=0, mx = 0, sum = 0;
-  for(int i =0; i<n; i++) {
-    sum+= (A[i] == '0'? 1 : -1;
-    if(mx<sum) {
-      mx = sum;
-      left = l;
-      right = i;
+    //https://www.youtube.com/watch?v=cLVpE5q_-DE&feature=youtu.be
+    //we need to find a substring left and right pointers for which count of 0s is more than the count of 1s to flip the whole substring and attain max no. of 1s in the whole string  
+    
+    //KADANE's ALGO
+    vector<int> ans;
+    
+    
+    int left=0, right=0, maxSum=INT_MIN, ltemp=0, count=0;
+    
+    //check if the string contains all 1s
+    for(int i=0; i<A.size(); i++) {
+        if(A[i]=='0') {
+            count++;
+        }
     }
-    if(mx<0) {
-      left = i+1;
-      mx = 0;
+    
+    if(count==0) {
+        return ans;
     }
-  }
-  if(left == -1 || right == -1) {
-    return vector<int> (0,0);
-  }
-  
-  vector<int> X(2, 0);
-  X[0] = left+1;
-  X[1] = right+1;
-  return X;
+    
+    count=0;
+    for(int i=0; i<A.size(); i++){
+    
+        //count will increment for each zero
+        if(A[i]=='0') {
+            count++;    
+        }  
+        else {
+            count--;
+        }
+        
+        
+        
+        //case of substring with more number of zeroes
+        if(count>maxSum){
+            left = ltemp;
+            right = i;
+            maxSum=count;
+        }
+        
+        //substring has more number of 1s hence can't flip, set the ltemp i.e temporary left pointer to next position
+        if(count<0){
+            //put count=0 for the new substring to be traversed
+            count=0;
+            ltemp=i+1;
+        }
+        
+    }
+    
+
+    ans.push_back(left+1);
+    ans.push_back(right+1);
+    
+    
+    return ans;
 }
 
 
