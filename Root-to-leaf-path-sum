@@ -1,0 +1,70 @@
+//DAY 100/100
+ 
+/*  
+Root to Leaf Paths With Sum
+Asked in:  
+Microsoft
+Yahoo
+Amazon
+Given a binary tree and a sum, find all root-to-leaf paths where each path’s sum equals the given sum.
+
+For example:
+Given the below binary tree and sum = 22,
+
+              5
+             / \
+            4   8
+           /   / \
+          11  13  4
+         /  \    / \
+        7    2  5   1
+return
+
+[
+   [5,4,11,2],
+   [5,8,4,5]
+]
+*/
+
+
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ 
+void call_me(TreeNode*A, int B, vector<int> path, vector<vector<int>> &res)  {
+    //in case of the node being NULL
+    if(A==NULL) {
+        return;
+    }
+    
+    //keep of updating the remaining/needed sum i.e. aux_sum and maintain path vector with the current node value
+    int aux_sum= B - A->val;
+    path.push_back(A->val);
+    
+    //case of leaf value with no longer remaining/needed sum
+    if(A->left == NULL && A->right==NULL && aux_sum==0) {
+        res.push_back(path);
+        return;
+    }
+    
+    //regular case for traversal, check for left, then for right node for each node
+    call_me(A->left, aux_sum, path, res);
+    call_me(A->right, aux_sum, path, res);
+    
+    //after completing left and right traversal of a node, delete the node from path because the node is not giving us the required path sum
+    path.pop_back();
+}
+ 
+vector<vector<int> > Solution::pathSum(TreeNode* A, int B) {
+    vector<vector<int>> res;
+    vector<int> path;
+    call_me(A, B, path, res);
+
+    return res;
+}
