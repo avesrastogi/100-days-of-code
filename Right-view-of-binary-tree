@@ -1,0 +1,103 @@
+//DAY 100/100
+/*
+Problem Description
+
+Given a binary tree A of integers. Return an array of integers representing the right view of the Binary tree.
+
+Right view of a Binary Tree: is a set of nodes visible when the tree is visited from Right side.
+
+
+
+Problem Constraints
+1 <= Number of nodes in binary tree <= 105
+
+0 <= node values <= 109
+
+
+
+Input Format
+First and only argument is an pointer to the root of binary tree A.
+
+
+
+Output Format
+Return an integer array denoting the right view of the binary tree A.
+
+
+
+Example Input
+Input 1:
+
+        1
+      /   \
+     2    3
+    / \  / \
+   4   5 6  7
+  /
+ 8 
+Input 2:
+
+    1
+   /  \
+  2    3
+   \
+    4
+     \
+      5
+
+
+Example Output
+Output 1:
+
+ [1, 3, 7, 8]
+Output 2:
+
+ [1, 3, 4, 5]
+*/
+
+
+
+
+
+
+
+
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ 
+ 
+//at each level keep a max level call by reference and the level of the node starting from 1
+void call_me(TreeNode* root, vector<int> &res, int level, int *max_level) {
+    //if the node is NULL do not enter anything in vector
+    if(root==NULL) {
+        return;
+    }
+    
+    //max_level resembles the level till which we have right child in subtree and do not need to traverse the left child/subtree
+    //if the current levl is greater than the last level at which right child was found then push the node->value
+    if(*max_level < level) {
+        res.push_back(root->val);
+        *max_level = level;
+    }
+    
+    //for regular traversal of nodes, go through right then left child
+    call_me(root->right, res, level+1, max_level);
+    call_me(root->left, res, level+1, max_level);
+} 
+
+ 
+vector<int> Solution::solve(TreeNode* A) {
+    vector<int> res;
+    //find max element(right most element) upto certain level
+    int max_level = 0;
+    call_me(A, res, 1, &max_level);
+    return res;
+}
+
