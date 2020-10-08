@@ -1,0 +1,93 @@
+//DAY 100/100
+/*
+Convert to Palindrome
+Asked in:  
+Amazon
+Problem Description
+
+Given a string A consisting only of lowercase characters, we need to check whether it is possible to make this string a palindrome after removing exactly one character from this.
+
+If it is possible then return 1 else return 0.
+
+
+
+Problem Constraints
+3 <= |A| <= 105
+
+A[i] is always a lowercase character.
+
+
+
+Input Format
+First and only argument is an string A.
+
+
+
+Output Format
+Return 1 if it is possible to convert A to palindrome by removing exactly one character else return 0.
+
+
+
+Example Input
+Input 1:
+
+ A = "abcba"
+Input 2:
+
+ A = "abecbea"
+
+
+Example Output
+Output 1:
+
+ 1
+Output 2:
+
+ 0
+
+
+Example Explanation
+Explanation 1:
+
+ We can remove character ‘c’ to make string palindrome
+Explanation 2:
+
+ It is not possible to make this string palindrome just by removing one character 
+*/
+
+
+
+//Convert To Palindrome
+
+//tarverse on both ends of the string, check by eleiminating from the front OR the last either of two must be a palindrome 
+//loop through the above statement till the mid index
+bool check_Pal(string A, int front, int last) {
+    while(front<last) {
+        if(A[front]!=A[last]) {
+            return false;
+        }
+        front++;
+        last--;
+    }
+    return true;
+}
+
+
+
+int Solution::solve(string A) {
+    int front=0, last = A.length()-1;
+    while(front<last) {
+        if(A[front]!=A[last]) {
+            if(check_Pal(A, front+1, last)||check_Pal(A, front, last-1)) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
+        }
+        front++;
+        last--;
+    }
+    
+    return 1;
+}
