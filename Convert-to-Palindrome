@@ -56,7 +56,6 @@ Explanation 2:
 */
 
 
-
 //Convert To Palindrome
 
 //tarverse on both ends of the string, check by eleiminating from the front OR the last either of two must be a palindrome 
@@ -77,8 +76,12 @@ bool check_Pal(string A, int front, int last) {
 int Solution::solve(string A) {
     int front=0, last = A.length()-1;
     while(front<last) {
+        //for abcba it'll never enter the condition
+        
+        //this condition arises from: if the string is already palindrome the no need to eliminate one character and check
+        //because in such a case eliminating mid char will still make it a palindrome
         if(A[front]!=A[last]) {
-            if(check_Pal(A, front+1, last)||check_Pal(A, front, last-1)) {
+            if(check_Pal(A, front+1, last) || check_Pal(A, front, last-1)) {
                 return 1;
             }
             else {
