@@ -18,7 +18,7 @@ Given 1->1->2->3->3, return 1->2->3.
 
 
 
-/**
+/*
  * Definition for singly-linked list.
  * struct ListNode {
  *     int val;
@@ -26,6 +26,11 @@ Given 1->1->2->3->3, return 1->2->3.
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+ 
+ 
+ 
+//WORKING: Just keep two pointer at the first and second node, in case of duplicacy iterate the second pointer by one position and
+//initialize it as the next of first ptr
 ListNode* Solution::deleteDuplicates(ListNode* A) {
     ListNode *p=A;
     ListNode *q=A->next;
