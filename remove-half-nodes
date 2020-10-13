@@ -78,6 +78,11 @@ Explanation 2:
 
 
 
+
+// LOGIC: Think in laymen terms, root should be linked to grand children(leaf) if the child is a "half node" if the child is a left keep it as it is.
+// If the child has a left node but not the right node, return the child's left as the root's new children and delete the child half node, 
+// similarly for no left and one right child.
+
 /**
  * Definition for binary tree
  * struct TreeNode {
