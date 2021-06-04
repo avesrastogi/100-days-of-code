@@ -1,0 +1,107 @@
+/*
+Least Common Ancestor
+Asked in:  
+Facebook
+Adobe
+Microsoft
+Amazon
+Google
+Find the lowest common ancestor in an unordered binary tree given two values in the tree.
+
+ Lowest common ancestor : the lowest common ancestor (LCA) of two nodes v and w in a tree or directed acyclic graph (DAG) is the lowest (i.e. deepest) node that has both v and w as descendants. 
+Example :
+
+
+        _______3______
+       /              \
+    ___5__          ___1__
+   /      \        /      \
+   6      _2_     0        8
+         /   \
+         7    4
+For the above tree, the LCA of nodes 5 and 1 is 3.
+
+ LCA = Lowest common ancestor 
+Please note that LCA for nodes 5 and 4 is 5.
+
+You are given 2 values. Find the lowest common ancestor of the two nodes represented by val1 and val2
+No guarantee that val1 and val2 exist in the tree. If one value doesn’t exist in the tree then return -1.
+There are no duplicate values.
+You can use extra memory, helper functions, and can modify the node struct but, you can’t add a parent pointer.
+*/
+
+
+
+
+
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+bool checkTree(TreeNode* A, int number) {
+    
+    if(A==NULL) 
+        return 0;
+        
+    if(A->val==number)
+        return 1;
+    
+    //check in left and right subtrees
+    if(checkTree(A->left, number) || checkTree(A->right, number)) 
+        return 1;
+        
+    return 0;
+    
+}
+
+TreeNode* sol(TreeNode* A, int B, int C) {
+    if(A==NULL)
+        return NULL;
+        
+    //if the node is B or C return the node, considering B or C is the ancestor of the other
+    if(A->val==B || A->val==C) {
+        return A;
+    }
+    
+    //traverse the leftmost, and rightmost of the leftmost node
+    TreeNode* left_node = sol(A->left, B, C);
+    
+    //similarly for the right subtree
+    TreeNode* right_node = sol(A->right, B, C);
+    
+    if(left_node != NULL && right_node != NULL) 
+        return A;
+        
+    return left_node? left_node : right_node;
+} 
+
+int Solution::lca(TreeNode* A, int B, int C) {
+    //check if B and C are in the tree
+    if(checkTree(A,B) && checkTree(A,C)) {
+        TreeNode* temp = sol(A, B, C);
+        return temp->val;
+    }
+    return -1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
