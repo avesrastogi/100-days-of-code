@@ -25,9 +25,41 @@ this number is a COLORFUL number since product of every digit of a sub-sequence 
 Output : 1
 */
 
+//DID IT WITHOUT ANY HELP
+
+int Solution::colorful(int A) {
+    //create subsequences
+    int temp = A;
+    vector<int> numbers;
+    map<int, int> X;
+    
+    while(temp) {
+        numbers.push_back(temp%10);
+        temp/=10;
+    }
+    
+    for(int i=0; i<numbers.size(); i++) {
+        for(int j=i; j<numbers.size(); j++) {
+            int num=1;
+            for(int k=i; k<=j; k++) {
+                num *= numbers[k];
+            }
+            X[num]++;
+        }
+    }
+    
+    for(auto i: X) {
+        if(i.second > 1) {
+            return 0;
+        }
+    }
+    
+    return 1;
+}
 
 
 
+/*
 int Solution::colorful(int A) {
 map<int, int> m;
 long long int prod=1, num=0;
@@ -54,4 +86,5 @@ while(A>0){
 return 1;
 }
 
+*/
 
