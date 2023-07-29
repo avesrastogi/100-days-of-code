@@ -18,6 +18,46 @@ return 5->4->3->2->1->NULL.
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+
+/*
+OPTIMISED: 
+       if(head==NULL) {
+            return false;
+        }
+
+        // find middle
+        ListNode* fast = head;
+        ListNode* slow = head;
+
+        while(fast!=NULL && fast->next!=NULL) {
+            slow = slow->next;            
+            fast = fast->next->next;
+        }
+        
+        ListNode* p = slow;
+        ListNode* q = NULL;
+        ListNode* r;
+
+        // reverse second half of list
+        while(p) {
+            r = q;
+            q = p;
+            p = p->next;
+            q->next = r;
+        }
+        slow = q;
+
+        // compare 
+        while(head!=NULL && slow!=NULL) {
+            if(head->val != slow->val) 
+                return false;
+            head=head->next;
+            slow=slow->next;
+        }
+
+        return true;
+*/
+
 ListNode* Solution::reverseList(ListNode* A) {
     ListNode *p=A;
     ListNode *q=NULL;
